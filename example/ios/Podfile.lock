@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - Marvel (1.0.6.1)
+  - marvelflutter (0.0.1):
+    - Flutter
+    - Marvel
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - marvelflutter (from `.symlinks/plugins/marvelflutter/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Marvel
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  marvelflutter:
+    :path: ".symlinks/plugins/marvelflutter/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  Marvel: bd5218621e2ab2026b1ed6ac92f9826ba428859b
+  marvelflutter: 6c4c672375360c2086de023217c3db61999ea511
+
+PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
+
+COCOAPODS: 1.11.3
