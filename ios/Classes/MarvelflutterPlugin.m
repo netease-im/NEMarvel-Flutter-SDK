@@ -24,9 +24,11 @@
       config.extenInfo =  dic[@"extenInfo"];
       config.assLogFilePath =  dic[@"assLogFilePath"];
       NSString *marvelId = dic[@"marvelId"];
-      [Marvel  startWithMarvelId:marvelId config:config];
-      result(@(0));
-      return;
+      if([marvelId length]){
+        [Marvel  startWithMarvelId:marvelId config:config];
+        result(@(0));
+        return;
+      }
     }
     result(@(-1));
   }

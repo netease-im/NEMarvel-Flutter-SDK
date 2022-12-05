@@ -26,4 +26,18 @@ abstract class MarvelflutterPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+  Future<int?> startMarvel(String marvelId, Map<String, dynamic> config) {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+    /// Submits a Crashlytics report of a caught error.
+  Future<void> recordError({
+    required String exception,
+    required String information,
+    required String reason,
+    bool fatal = false,
+    String? buildId,
+    List<Map<String, String>>? stackTraceElements,
+  }) {
+    throw UnimplementedError('recordError() is not implemented');
+  }
 }
