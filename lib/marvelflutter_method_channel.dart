@@ -32,16 +32,17 @@ class MethodChannelMarvelflutter extends MarvelflutterPlatform {
     required String reason,
     bool fatal = false,
     String? buildId,
-    List<Map<String, String>>? stackTraceElements,
+    String? stackTraceElements,
+    // List<Map<String, String>>? stackTraceElements,
   }) async {
     try {
-      await methodChannel.invokeMethod<void>('MarvelFlutter#recordError', <String, dynamic>{
+      await methodChannel.invokeMethod<void>('reportUserException', <String, dynamic>{
         'exception': exception,
         'information': information,
         'reason': reason,
         'fatal': fatal,
         'buildId': buildId ?? '',
-        'stackTraceElements': stackTraceElements ?? [],
+        'stackTrace': stackTraceElements ?? [],
       });
     } on PlatformException catch (e, s) {
       // convertPlatformException(e, s);

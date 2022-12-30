@@ -5,7 +5,21 @@ import 'package:flutter/services.dart';
 import 'package:marvelflutter/marvelflutter.dart';
 
 void main() {
-  runApp(const MyApp());
+  FlutterError.onError = (FlutterErrorDetails details) {
+    //获取 widget build 过程中出现的异常错误
+   Marvelflutter.recordFlutterFatalError(details);
+  };
+  runZonedGuarded(
+    () {
+        runApp(const MyApp());
+    },
+    (error, stackTrace) {
+      //没被我们catch的异常
+      FlutterErrorDetails details =  FlutterErrorDetails(stack: stackTrace, exception: error);
+      Marvelflutter.recordFlutterFatalError(details);
+
+    },
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -18,9 +32,11 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   final _marvelflutterPlugin = Marvelflutter();
-
+  
   @override
   void initState() {
+    dynamic flag = true;
+    print(flag++);
     super.initState();
     initPlatformState();
   }

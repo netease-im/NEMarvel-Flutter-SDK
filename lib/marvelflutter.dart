@@ -7,12 +7,12 @@ class Marvelflutter {
   Future<String?> getPlatformVersion() {
     return MarvelflutterPlatform.instance.getPlatformVersion();
   }
-  Future<int?> startMarvel(String marvelId, Map<String, dynamic> config) {
+  static Future<int?> startMarvel(String marvelId, Map<String, dynamic> config) {
     return MarvelflutterPlatform.instance.startMarvel(marvelId,config);
   }
 
   /// Submits a Crashlytics report of a caught error.
-  Future<void> recordError(dynamic exception, StackTrace? stack,
+  static Future<void> recordError(dynamic exception, StackTrace? stack,
       {dynamic reason,
       Iterable<Object> information = const [],
       bool? printDetails,
@@ -56,22 +56,23 @@ class Marvelflutter {
         : stack;
 
     // Report error.
-    final List<Map<String, String>> stackTraceElements =
-        getStackTraceElements(stackTrace);
+    // final List<Map<String, String>> stackTraceElements =
+    //     getStackTraceElements(stackTrace);
     final String? buildId = getBuildId(stackTrace);
 
     return MarvelflutterPlatform.instance.recordError(
       exception: exception.toString(),
       reason: reason.toString(),
       information: _information,
-      stackTraceElements: stackTraceElements,
+      // stackTraceElements: stackTraceElements,
+      stackTraceElements: stack.toString(),
       buildId: buildId,
       fatal: fatal,
     );
   }
   /// Submits a Crashlytics report of an error caught by the Flutter framework.
   /// Use [fatal] to indicate whether the error is a fatal or not.
-  Future<void> recordFlutterError(FlutterErrorDetails flutterErrorDetails,
+  static Future<void> recordFlutterError(FlutterErrorDetails flutterErrorDetails,
       {bool fatal = false}) {
     FlutterError.presentError(flutterErrorDetails);
 
@@ -88,7 +89,7 @@ class Marvelflutter {
   }
 
   /// Submits a Crashlytics report of a fatal error caught by the Flutter framework.
-  Future<void> recordFlutterFatalError(
+  static Future<void> recordFlutterFatalError(
       FlutterErrorDetails flutterErrorDetails) {
     return recordFlutterError(flutterErrorDetails, fatal: true);
   }
