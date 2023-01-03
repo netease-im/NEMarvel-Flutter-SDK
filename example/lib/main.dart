@@ -32,11 +32,14 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   final _marvelflutterPlugin = Marvelflutter();
-  
+ 
   @override
   void initState() {
-    dynamic flag = true;
-    print(flag++);
+    // dynamic flag = true;
+    // print(flag++);
+    Map<String, dynamic>  config = {};
+    config['sdkVersion'] = '1.0.0';
+    Marvelflutter.startMarvel('5fc2d2b1d22a4483a4d51306e2bd70c7', config);
     super.initState();
     initPlatformState();
   }

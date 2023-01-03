@@ -35,7 +35,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.netease.marvelflutter.marvelflutter
+        package: com.netease.marvel.marvelflutter
         pluginClass: MarvelflutterPlugin
       ios:
         pluginClass: MarvelflutterPlugin

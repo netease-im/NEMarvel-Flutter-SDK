@@ -1,8 +1,7 @@
-group 'com.netease.marvelflutter.marvelflutter'
-version '1.0-SNAPSHOT'
+group 'com.netease.marvel.marvelflutter'
+version '1.0'
 
 buildscript {
-    ext.kotlin_version = '1.6.10'
     repositories {
         google()
         mavenCentral()
@@ -10,7 +9,6 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -22,7 +20,6 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion 31
@@ -32,19 +29,16 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
-
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 18
     }
-}
 
-dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    dependencies {
+        // implementation fileTree(dir: 'libs', include: ['*.jar'])
+        // compileOnly 'com.netease.yunxin:yxbase:1.0.0'
+        // compileOnly 'com.netease.yunxin:nertc:3.9.0'
+        // implementation 'com.faceunity:nama:7.1.0-lite'
+        implementation 'com.netease.marvel:exception-reporting-client:1.0.7' 
+    }
+
 }
