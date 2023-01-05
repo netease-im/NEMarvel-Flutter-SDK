@@ -8,8 +8,10 @@ import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import com.netease.marvel.exception.reporting.client.ExceptionReportingClient;
+import com.netease.marvel.exception.reporting.client.MarvelConstants;
 import com.netease.marvel.exception.reporting.client.UserInfo;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /** MarvelflutterPlugin */
@@ -42,33 +44,30 @@ public class MarvelflutterPlugin implements FlutterPlugin, MethodCallHandler {
       userInfo.deviceId = deviceId; // 设备信息，非必需qos管理数据，可不填
       userInfo.sdkVersion = sdkVersion; // 你的sdk/app版本号，用于统计，可不填
       userInfo.marvelId = marvelId; // 你申请的marvel id
+      userInfo.userSdkType = MarvelConstants.UserSdkType.MARVEL_USER_SDK_TYPE_FLUTTER;
       ExceptionReportingClient.getInstance().start(userInfo); // 启动
       result.success(0);
     }else if ( call.method.equals("reportUserException")) {
-//      NSDictionary * dic = call.arguments;
-//      if([dic isKindOfClass:[NSDictionary class]]){
-//        NSString*exception = dic[@"exception"];
-//        NSString*information = dic[@"information"];
-//        NSString*reason = dic[@"reason"];
-////            NSString*fatal = dic[@"fatal"];
-//        NSString*buildId = dic[@"buildId"];
-//        NSString*stackTrace= dic[@"stackTrace"];
-//        NSArray* stackTraces = NULL;
-//        if(stackTrace){
-//          stackTraces = [stackTrace componentsSeparatedByString:@"\n"];
-//        }
-//        NSMutableDictionary * info = [NSMutableDictionary dictionary];
-//        info[@"stackTrace"] = stackTraces;
-//        info[@"exception"] = exception;
-//        info[@"information"] = information;
-//        info[@"buildId"] = buildId;
-//        info[@"reason"] = reason;
-//
-//        [Marvel reportUserException:info];
-//        result(@(0));
-//        return;
-//      }
-      result.success("Android " + android.os.Build.VERSION.RELEASE);
+      String exception = call.argument("exception");
+      String reason = call.argument("reason");
+      String information =  call.argument("information");
+      String buildId = call.argument("buildId");
+      String stackTrace =  call.argument("stackTrace");
+      Boolean fatal = call.argument("fatal");
+
+      JSONObject jsonObject = new JSONObject();
+      try {
+        jsonObject.put("exception", exception);
+        jsonObject.put("reason", reason);
+        jsonObject.put("information", information);
+        jsonObject.put("buildId", buildId);
+        jsonObject.put("stackTrace", stackTrace);
+        jsonObject.put("fatal", fatal);
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
+      ExceptionReportingClient.getInstance().reportUserException(jsonObject.toString());
+      result.success(0);
 
     }
     else {
