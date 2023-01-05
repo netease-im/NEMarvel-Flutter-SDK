@@ -38,7 +38,7 @@ android {
         // compileOnly 'com.netease.yunxin:yxbase:1.0.0'
         // compileOnly 'com.netease.yunxin:nertc:3.9.0'
         // implementation 'com.faceunity:nama:7.1.0-lite'
-        implementation 'com.netease.marvel:exception-reporting-client:1.0.7' 
+        implementation 'com.netease.marvel:exception-reporting-client:1.0.12-SNAPSHOT'
     }
 
 }
