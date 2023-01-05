@@ -21,6 +21,7 @@ public class MarvelflutterPlugin implements FlutterPlugin, MethodCallHandler {
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
   private MethodChannel channel;
+  private boolean started = false;
 
   @Override
   public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -38,7 +39,6 @@ public class MarvelflutterPlugin implements FlutterPlugin, MethodCallHandler {
       String marvelId =  call.argument("marvelId");
       String sdkVersion =  call.argument("sdkVersion");
 
-
       UserInfo userInfo = new UserInfo();
       userInfo.userId = userId; // 用户信息，非必需qos管理数据，可不填
       userInfo.deviceId = deviceId; // 设备信息，非必需qos管理数据，可不填
@@ -46,6 +46,7 @@ public class MarvelflutterPlugin implements FlutterPlugin, MethodCallHandler {
       userInfo.marvelId = marvelId; // 你申请的marvel id
       userInfo.userSdkType = MarvelConstants.UserSdkType.MARVEL_USER_SDK_TYPE_FLUTTER;
       ExceptionReportingClient.getInstance().start(userInfo); // 启动
+      started = true;
       result.success(0);
     }else if ( call.method.equals("reportUserException")) {
       String exception = call.argument("exception");
@@ -66,9 +67,9 @@ public class MarvelflutterPlugin implements FlutterPlugin, MethodCallHandler {
       } catch (JSONException e) {
         e.printStackTrace();
       }
-      ExceptionReportingClient.getInstance().reportUserException(jsonObject.toString());
-      result.success(0);
 
+      int ret = ExceptionReportingClient.getInstance().reportUserException(jsonObject.toString());
+      result.success(started ? ret : 1);
     }
     else {
       result.notImplemented();
